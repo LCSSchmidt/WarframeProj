@@ -3,16 +3,16 @@ package Settings;
 import java.net.URL;
 
 public class DataBase {
-    static URL url;
+    URL url;
     
     public DataBase() {
         try {
-            url = new URL("http://content.warframe.com/dynamic/worldState.php");
+            String url = Constants.URL;
         } catch (Exception e) {
         }
     }
-
-    public static URL getUrl() {
+    
+    public URL getUrl(){
         return url;
     }
 }

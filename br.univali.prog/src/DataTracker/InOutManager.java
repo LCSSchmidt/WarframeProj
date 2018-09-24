@@ -8,11 +8,11 @@ import java.io.InputStreamReader;
 public class InOutManager {
     BufferedReader bin;
     String worldData;
-    
+    DataBase dataBase;
     public InOutManager(){
         try {
-            
-            this.bin = new BufferedReader(new InputStreamReader(DataBase.getUrl().openStream()));
+            dataBase = new DataBase();
+            this.bin = new BufferedReader(new InputStreamReader(dataBase.getUrl().openStream()));
         } catch (Exception e){
         }
     }
@@ -28,8 +28,9 @@ public class InOutManager {
     
     public String getAlerts(){
         String alerts = "";
-        alerts = worldData.substring(worldData.indexOf("Alerts\":["), worldData.indexOf(",\"Sorties"));
+        alerts = worldData.substring(worldData.indexOf("Alerts\":["), worldData.indexOf("\"]}}}]"));
         return alerts;
     }
+    
     
 }
