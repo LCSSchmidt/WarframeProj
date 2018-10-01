@@ -1,15 +1,19 @@
 package Settings;
 
+import WFExceptions.STConstantURLException;
 import java.net.URL;
+import javax.swing.JOptionPane;
 
 public class DataBase {
     URL url;
     
-    public DataBase() {
+    public DataBase() throws STConstantURLException{
         try {
-            String url = Constants.URL;
+            this.url = new URL(Constants.URL);    
         } catch (Exception e) {
+            throw new STConstantURLException();
         }
+        
     }
     
     public URL getUrl(){
