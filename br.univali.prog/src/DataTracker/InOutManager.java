@@ -1,6 +1,5 @@
 package DataTracker;
 
-
 import Settings.DataBase;
 import WFExceptions.DTDataGatherException;
 import WFExceptions.DTGettingAlertsException;
@@ -9,35 +8,37 @@ import java.io.InputStreamReader;
 import javax.swing.JOptionPane;
 
 public class InOutManager {
-    BufferedReader bin;
+
     String worldData;
     DataBase dataBase;
-    public InOutManager(){
+
+    public InOutManager() {
         try {
             dataBase = new DataBase();
-            this.bin = new BufferedReader(new InputStreamReader(dataBase.getUrl().openStream()));
-        } catch (Exception e){
+
+        } catch (Exception e) {
             JOptionPane.showConfirmDialog(null, e.getMessage());
         }
         worldData = "";
     }
-    
-    public void dataGather() throws DTDataGatherException{
+
+    public void dataGather() throws DTDataGatherException {
         int bitlindo = -1;
         try {
-            do{
+            BufferedReader bin = new BufferedReader(new InputStreamReader(dataBase.getUrl().openStream()));
+            do {
                 bitlindo = bin.read();
-                if(bitlindo != -1){
-                worldData += String.valueOf((char)bitlindo);
+                if (bitlindo != -1) {
+                    worldData += String.valueOf((char) bitlindo);
                 }
-            }while(bitlindo >= 0);
+            } while (bitlindo >= 0 && bin.ready());
             bin.close();
         } catch (Exception e) {
             throw new DTDataGatherException();
         }
     }
-    
-    public String getAlerts()throws DTGettingAlertsException{
+
+    public String getAlerts() throws DTGettingAlertsException {
         String alerts = "";
         try {
             alerts = worldData.substring(worldData.indexOf("Alerts\":["), worldData.indexOf("}}]"));
@@ -46,6 +47,5 @@ public class InOutManager {
         }
         return alerts;
     }
-    
-    
+
 }
