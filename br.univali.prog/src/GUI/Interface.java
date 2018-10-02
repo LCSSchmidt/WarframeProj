@@ -44,6 +44,7 @@ public class Interface extends javax.swing.JFrame  {
             @Override
             public void mouseClicked(MouseEvent me) {
                 th.interrupt();
+                edu.done();
                 jButtonMMenuAlerts.setEnabled(true);
                 jFinalSpaceGIF.setVisible(false);
                 jPanelMAlert.setVisible(false);
@@ -54,6 +55,7 @@ public class Interface extends javax.swing.JFrame  {
         this.jButtonMAlertUpdate.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
+                edu.done();
                 jTableAlertDataLoad();
             }
             
@@ -61,28 +63,26 @@ public class Interface extends javax.swing.JFrame  {
         
     }
     
-    class EventTimeUpdate extends SwingWorker<DefaultTableModel, Long>{
+    class EventTimeUpdate extends SwingWorker<Void, Void>{
         Long evntTime;
         int indice = 0;
         @Override
-        protected DefaultTableModel doInBackground() throws Exception {
+        protected Void doInBackground() throws Exception {
            Object rowData = new Object();
-            System.out.println("antes do while");
            do{
-               System.out.println("while");
                for(WFEvent wfevt: alerts){
-//                   System.out.println("alerts: " + alerts.size());
-                   rowData = new Long(((Alert)wfevt).getExpTime()) - System.currentTimeMillis();
-                   //rowData = TimeUnit.MILLISECONDS.toMinutes(((Alert)wfevt).getExpTime() - System.currentTimeMillis());
+                   //System.out.println(TimeUnit.MILLISECONDS.toMinutes(((Alert)wfevt).getExpTime() - System.currentTimeMillis()));
+                   rowData = TimeUnit.MILLISECONDS.toMinutes(((Alert)wfevt).getExpTime() - System.currentTimeMillis());
                    newModel.setValueAt(rowData, indice, 1);
                    newModel.fireTableCellUpdated(1, indice);
                    newModel.fireTableRowsUpdated(0, newModel.getRowCount());
                    indice++;
                }
+               Thread.sleep(15000);
                indice = 0;
            }
            while(jPanelMAlert.isVisible());
-           return newModel;
+           return null;
         }
         
         @Override
@@ -105,7 +105,6 @@ public class Interface extends javax.swing.JFrame  {
             model.addRow(rowData);
         }
         edu.execute();
-        
     }
     
     public void jTableAlertDataLoad(){
@@ -113,19 +112,9 @@ public class Interface extends javax.swing.JFrame  {
         th = new Thread(){
             @Override
             public void run() {
-                newModel = new DefaultTableModel();//DefaultTableModel)jTableAlerts.getModel();
-                //System.out.println(model.getRowCount());
+                newModel = (DefaultTableModel)jTableAlerts.getModel();
+                newModel.setRowCount(0);
                 
-                TableModel previousModel = jTableAlerts.getModel();
-                int columnCount = previousModel.getColumnCount();
-                for (int i = 0; i < columnCount; i++) {
-                    newModel.addColumn(previousModel.getColumnName(i));
-                }
-                
-                jTableAlerts.setModel(newModel);
-
-                //model.setRowCount(0);
-                //System.out.println(model.getRowCount() + "xx" );
                 try {
                     inOutM.dataGather();
                     eventFragmented = inOutM.getAlerts();
@@ -133,7 +122,6 @@ public class Interface extends javax.swing.JFrame  {
                     JOptionPane.showConfirmDialog(null, e.getMessage());
                 }
                 alerts.clear();
-                
                 AlertDataOrganizer.organizeManager(eventFragmented, alerts);
                 addRowToTable(newModel);
                 jPanelMMenu.setVisible(false);
@@ -141,7 +129,6 @@ public class Interface extends javax.swing.JFrame  {
             }
         };
         th.start();
-        
     }
 
     @SuppressWarnings("unchecked")
