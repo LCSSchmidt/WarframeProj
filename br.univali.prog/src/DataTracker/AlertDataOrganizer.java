@@ -23,7 +23,7 @@ public class AlertDataOrganizer {
     private static int timeLeft;
     
     private static void separateAlerts(String str){
-        pattern = Pattern.compile(Settings.Constants.PATTERNALERTSDIVISOR);
+        pattern = Pattern.compile(Settings.Constants.REGEXALERTSDIVISOR);
         allAlerts = pattern.split(str);
         allAlerts[0] = null;
     }
@@ -39,14 +39,14 @@ public class AlertDataOrganizer {
     }
         
     private static Long seekInitTime(String alert){
-        pattern = Pattern.compile(Settings.Constants.PATTERNINITTIME);
+        pattern = Pattern.compile(Settings.Constants.REGEXINITTIME);
         matcher = pattern.matcher(alert);
         data = matcherFinder(matcher);
         return Long.parseLong(data);
     }
     
     private static Long seekExpTime(String alert){
-        pattern = Pattern.compile(Settings.Constants.PATTERNEXPTIME);
+        pattern = Pattern.compile(Settings.Constants.REGEXEXPTIME);
         matcher = pattern.matcher(alert);
         data = matcherFinder(matcher);
         dataSplited = data.split("\"");
@@ -54,7 +54,7 @@ public class AlertDataOrganizer {
     }
     
     private static String seekTypeOf(String alert){
-        pattern = Pattern.compile(Settings.Constants.PATTERNTYPEOF);
+        pattern = Pattern.compile(Settings.Constants.REGEXTYPEOF);
         matcher = pattern.matcher(alert);
         data = matcherFinder(matcher);
         dataSplited = data.split("MT_");
@@ -72,15 +72,15 @@ public class AlertDataOrganizer {
     private static void seekRewards(String alert){
         String content = "";
         rewardItem = "";
-        pattern = Pattern.compile(Settings.Constants.PATTERNREWARDS);
+        pattern = Pattern.compile(Settings.Constants.REGEXREWARDS);
         matcher = pattern.matcher(alert);
         data = matcherFinder(matcher);
-        pattern = Pattern.compile(Settings.Constants.PATTERNREWARDCREDITS);
+        pattern = Pattern.compile(Settings.Constants.REGEXREWARDCREDITS);
         matcher = pattern.matcher(data);
         content = matcherFinder(matcher);
         dataSplited = content.split(":");
         rewardCredits = dataSplited[1];
-        pattern = Pattern.compile(Settings.Constants.PATTERNREWARDITEM);
+        pattern = Pattern.compile(Settings.Constants.REGEXREWARDITEM);
         matcher = pattern.matcher(data);
         while (matcher.find()) {            
             if(matcher.group().length() != 0){
@@ -100,8 +100,8 @@ public class AlertDataOrganizer {
             timeAct = seekInitTime(alert);
             timeExp = seekExpTime(alert);
             typeOf = seekTypeOf(alert);
-            minLvl = seekLvl(alert, Settings.Constants.PATTERNMINLVL);
-            maxLvl = seekLvl(alert, Settings.Constants.PATTERNMAXLVL);
+            minLvl = seekLvl(alert, Settings.Constants.REGEXMINLVL);
+            maxLvl = seekLvl(alert, Settings.Constants.REGEXMAXLVL);
             seekRewards(alert);
             if(rewardItem.equalsIgnoreCase(""))
                 rewardItem = "Não ha itens";

@@ -3,13 +3,15 @@ package Settings;
 public class Constants {
 
     protected static final String URL = "http://content.warframe.com/dynamic/worldState.php";
-    public static final String PATTERNALERTSDIVISOR = "Activation";
-    public static final String PATTERNINITTIME = "\\d{13,13}";
-    public static final String PATTERNEXPTIME = "Expiry.*?\\d{13,13}";
-    public static final String PATTERNTYPEOF = "MT_[A-Z]*[_A-Z]*";
-    public static final String PATTERNMINLVL = "minEnemyLevel.*?[\\d]+";
-    public static final String PATTERNMAXLVL = "maxEnemyLevel.*?[\\d]+";
-    public static final String PATTERNREWARDS = "missionReward.*";
-    public static final String PATTERNREWARDITEM = "[A-Za-z0-9][^:,./]*\",\"|[A-Za-z0-9][^:,./]*\"]}";
-    public static final String PATTERNREWARDCREDITS = "credits\":\\d+[^,}]*";
+    public static final String REGEXALERTSDIVISOR = "Activation";
+    public static final String REGEXINITTIME = "\\d{13,13}";
+    public static final String REGEXEXPTIME = "Expiry.*?\\d{13,13}";
+    public static final String REGEXTYPEOF = "MT_[A-Z]*[_A-Z]*";
+    public static final String REGEXMINLVL = "minEnemyLevel.*?[\\d]+";
+    public static final String REGEXMAXLVL = "maxEnemyLevel.*?[\\d]+";
+    public static final String REGEXREWARDS = "missionReward.*";
+    public static final String REGEXREWARDITEM = "[A-Za-z0-9][^:,./]*\",\"|[A-Za-z0-9][^:,./]*\"]}";
+    public static final String REGEXREWARDCREDITS = "credits\":\\d+[^,}]*";
+    public static final String REGEXALERTINITINDEX = "Alerts\":[";
+    public static final String REGEXALERTFINALINDEX = "}}],\"Sorties";
 }

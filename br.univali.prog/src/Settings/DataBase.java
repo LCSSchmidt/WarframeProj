@@ -2,7 +2,6 @@ package Settings;
 
 import WFExceptions.STConstantURLException;
 import java.net.URL;
-import javax.swing.JOptionPane;
 
 public class DataBase {
     URL url;

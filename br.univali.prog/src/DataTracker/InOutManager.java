@@ -17,7 +17,7 @@ public class InOutManager {
             dataBase = new DataBase();
 
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
         worldData = "";
     }
@@ -41,7 +41,7 @@ public class InOutManager {
     public String getAlerts() throws DTGettingAlertsException {
         String alerts = "";
         try {
-            alerts = worldData.substring(worldData.indexOf("Alerts\":["), worldData.indexOf("}}]"));
+            alerts = worldData.substring(worldData.indexOf(Settings.Constants.REGEXALERTINITINDEX), worldData.indexOf(Settings.Constants.REGEXALERTFINALINDEX));
         } catch (Exception e) {
             throw new DTGettingAlertsException();
         }

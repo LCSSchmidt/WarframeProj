@@ -13,7 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 public class Interface extends javax.swing.JFrame  {
 
@@ -69,6 +68,7 @@ public class Interface extends javax.swing.JFrame  {
         @Override
         protected Void doInBackground() throws Exception {
            Object rowData = new Object();
+           
            do{
                for(WFEvent wfevt: alerts){
                    //System.out.println(TimeUnit.MILLISECONDS.toMinutes(((Alert)wfevt).getExpTime() - System.currentTimeMillis()));
@@ -93,7 +93,6 @@ public class Interface extends javax.swing.JFrame  {
     
     public void addRowToTable(DefaultTableModel model){
         Object[] rowData = new Object[6];
-        //Iterator it = alerts.iterator();
         
         for(WFEvent wfevt: alerts){
             rowData[0] = ((Alert)wfevt).getTypeOf();
@@ -119,7 +118,7 @@ public class Interface extends javax.swing.JFrame  {
                     inOutM.dataGather();
                     eventFragmented = inOutM.getAlerts();
                 } catch (Exception e) {
-                    JOptionPane.showConfirmDialog(null, e.getMessage());
+                    JOptionPane.showMessageDialog(null, e.getMessage());
                 }
                 alerts.clear();
                 AlertDataOrganizer.organizeManager(eventFragmented, alerts);
