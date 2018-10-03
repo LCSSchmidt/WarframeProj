@@ -23,6 +23,7 @@ public class Interface extends javax.swing.JFrame  {
     JLabel jLabelFSGIF;
     Thread th;
     DefaultTableModel newModel;
+    boolean tableAlertsInProgress  = false;
 
     public Interface() {
         
@@ -48,14 +49,18 @@ public class Interface extends javax.swing.JFrame  {
                 jFinalSpaceGIF.setVisible(false);
                 jPanelMAlert.setVisible(false);
                 jPanelMMenu.setVisible(true);
+                
             }
             
         });
         this.jButtonMAlertUpdate.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
-                edu.done();
-                jTableAlertDataLoad();
+                if(!tableAlertsInProgress){
+                    System.out.println("xx");
+                    edu.done();
+                    jTableAlertDataLoad();
+                }
             }
             
         });
@@ -93,7 +98,6 @@ public class Interface extends javax.swing.JFrame  {
     
     public void addRowToTable(DefaultTableModel model){
         Object[] rowData = new Object[6];
-        
         for(WFEvent wfevt: alerts){
             rowData[0] = ((Alert)wfevt).getTypeOf();
             rowData[1] = ((Alert)wfevt).getTimeLeft();
@@ -104,10 +108,11 @@ public class Interface extends javax.swing.JFrame  {
             model.addRow(rowData);
         }
         edu.execute();
+        tableAlertsInProgress = false;
     }
     
     public void jTableAlertDataLoad(){
-        
+        tableAlertsInProgress = true;
         th = new Thread(){
             @Override
             public void run() {
